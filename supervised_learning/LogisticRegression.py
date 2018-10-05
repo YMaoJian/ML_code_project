@@ -39,7 +39,7 @@ class LogisticRegression():
                 self.bias = self.bias + self.learning_rate * loss
         
     def predict(self, x_test):
-        y_pred = np.sum(np.multiply(x_test, self.w) + self.bias, axis=1)
+        y_pred = sigmoid(np.sum(np.multiply(x_test, self.w) + self.bias, axis=1))
         for i in range(y_pred.shape[0]):
             if y_pred[i] > 0.5:
                 y_pred[i] = 1
@@ -51,7 +51,7 @@ class LogisticRegression():
         return result.sum() / y_test.shape[0]
     
 def main():
-    #这里使用泰坦尼克号数据测试，结果为0.6940298507462687，而scikit库为0.78
+    #这里使用泰坦尼克号数据测试，结果为0.7014925373134329，而scikit库为0.78
     titanic = pandas.read_csv("titanic_train.csv")
 
     titanic["Age"] = titanic["Age"].fillna(titanic["Age"].median())
