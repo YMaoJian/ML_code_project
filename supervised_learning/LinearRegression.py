@@ -2,23 +2,29 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+test = True
 class LinearRegression():
     def __init__(self):
         pass
     def fit(self, x_train, y_train):
         x_train = np.insert(x_train, 0, 1, axis=1)
+        #w求解:xw=y=>x.T.dot(x).dot(w)=x.T.dot(y),条件如下
+        if np.linalg.det(x_train.T.dot(x_train)) == 0:
+            raise ValueError("np.linalg.det(x_train.T.dot(x_train)) = 0")
         self.w = np.linalg.pinv(x_train.T.dot(x_train)).dot(x_train.T).dot(y_train)
         
     def predict(self, x_test):
         x_test = np.insert(x_test, 0, 1, axis=1)
         y_pred = x_test.dot(self.w)
-        #泰坦尼克数据是0,1与回归求出数据会不一致，正确率为0，实际中应去掉
-        for i in range(y_pred.shape[0]):
-            if y_pred[i] > 0.5:
-                y_pred[i] = 1
-            else:
-                y_pred[i] = 0
+        if test == False:
+            #泰坦尼克数据是0,1与回归求出数据会不一致，正确率为0，实际中应去掉
+            for i in range(y_pred.shape[0]):
+                if y_pred[i] > 0.5:
+                    y_pred[i] = 1
+                else:
+                    y_pred[i] = 0
         return y_test
+    
     def score(self, y_test, y_pred):
         result = np.equal(y_test, y_pred)
         print(result.sum())
@@ -26,13 +32,13 @@ class LinearRegression():
         return result.sum() / y_test.shape[0]
 
 def main():
-    test = False
     if test:
         x = np.array([[1,1,1],[2,2,2],[3,3,3]])
         y = np.array([[0.6],[1.2],[1.8]])
+        #x = np.array([[1,2,0],[0,0,0],[0,0,3]])
+        #y = np.array([[0.6],[1.2],[1.8]])
         lr = LinearRegression()
-        t = lr.fit(x,y)
-        print(t.w)
+        lr.fit(x,y)
         x_test = np.array([[4,4,4]])
         y_test = lr.predict(x_test)
         print(y_test)
