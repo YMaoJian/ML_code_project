@@ -27,40 +27,40 @@ class LinearRegression():
 
 def main():
     test = False
-if test:
-    x = np.array([[1,1,1],[2,2,2],[3,3,3]])
-    y = np.array([[0.6],[1.2],[1.8]])
-    lr = LinearRegression()
-    t = lr.fit(x,y)
-    print(t.w)
-    x_test = np.array([[4,4,4]])
-    y_test = lr.predict(x_test)
-    print(y_test)
-else:
-    titanic = pd.read_csv("titanic_train.csv")
+    if test:
+        x = np.array([[1,1,1],[2,2,2],[3,3,3]])
+        y = np.array([[0.6],[1.2],[1.8]])
+        lr = LinearRegression()
+        t = lr.fit(x,y)
+        print(t.w)
+        x_test = np.array([[4,4,4]])
+        y_test = lr.predict(x_test)
+        print(y_test)
+    else:
+        titanic = pd.read_csv("titanic_train.csv")
 
-    titanic["Age"] = titanic["Age"].fillna(titanic["Age"].median())
+        titanic["Age"] = titanic["Age"].fillna(titanic["Age"].median())
 
-    titanic.loc[titanic["Sex"]=="male","Sex"] = 0
-    titanic.loc[titanic["Sex"]=="female","Sex"] = 1
+        titanic.loc[titanic["Sex"]=="male","Sex"] = 0
+        titanic.loc[titanic["Sex"]=="female","Sex"] = 1
 
-    titanic["Embarked"] = titanic["Embarked"].fillna('S')
-    titanic.loc[titanic["Embarked"]=="S","Embarked"] = 0
-    titanic.loc[titanic["Embarked"]=="C","Embarked"] = 1
-    titanic.loc[titanic["Embarked"]=="Q","Embarked"] = 2
-    predictors = ["Pclass","Sex","Age","SibSp","Parch","Fare","Embarked"]
-    x = titanic[predictors]
-    y = titanic["Survived"]
-    x = np.array(x)
-    y = np.array(y)
+        titanic["Embarked"] = titanic["Embarked"].fillna('S')
+        titanic.loc[titanic["Embarked"]=="S","Embarked"] = 0
+        titanic.loc[titanic["Embarked"]=="C","Embarked"] = 1
+        titanic.loc[titanic["Embarked"]=="Q","Embarked"] = 2
+        predictors = ["Pclass","Sex","Age","SibSp","Parch","Fare","Embarked"]
+        x = titanic[predictors]
+        y = titanic["Survived"]
+        x = np.array(x)
+        y = np.array(y)
 
-    lr = LinearRegression()
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
-    lr.fit(x_train, y_train)
-    y_pred = lr.predict(x_test)
+        lr = LinearRegression()
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+        lr.fit(x_train, y_train)
+        y_pred = lr.predict(x_test)
 
-    score = lr.score(y_test, y_pred)
-    print(score)
+        score = lr.score(y_test, y_pred)
+        print(score)
     
 if __name__ == "__main__":
     main()
