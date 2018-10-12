@@ -5,10 +5,23 @@ import pandas
 def sigmoid(x):
     return 1/(1 + np.exp(-x))
 
+class RidgeRegression():
+    def __init__(self, alpha):
+        self.alpha = alpha
+
+    def __call__(self, w):
+        return self.alpha * w.T.dot(w) ** 0.5   
+
+class LassoRegression():
+    def __init__(self, alpha):
+        self.alpha = alpha
+
+    def __call__(self, w):
+        return self.alpha * np.sum(np.abs(w))
+
 class LogisticRegression():
     def __init__(self, learning_rate):
         self.learning_rate = learning_rate
-        
 ###################################################################################
 #gradient_function='BGD'时,num无效；gradient_function='SGD'时,num表示随机选取次数；
 #gradient_function='MBGD'时，num表示选取样本的num/10次数
