@@ -105,19 +105,3 @@ plt.plot(weights)
 plt.ylabel("w0-2")
 plt.xlabel("iters")
 plt.show()
-    titanic.loc[titanic["Sex"]=="female","Sex"] = 1
-
-    titanic["Embarked"] = titanic["Embarked"].fillna('S')
-    titanic.loc[titanic["Embarked"]=="S","Embarked"] = 0
-    titanic.loc[titanic["Embarked"]=="C","Embarked"] = 1
-    titanic.loc[titanic["Embarked"]=="Q","Embarked"] = 2
-    predictors = ["Pclass","Sex","Age","SibSp","Parch","Fare","Embarked"]
-    x = titanic[predictors]
-    y = titanic["Survived"]
-    x = np.array(x)
-    y = np.array(y)
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.4, random_state=42)
-    y_train = np.array(y_train).reshape(-1,1)
-    y_test = np.array(y_test).reshape(-1,1)
-    
-    return x_train, x_test, y_train, y_test
