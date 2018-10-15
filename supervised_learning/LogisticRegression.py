@@ -19,7 +19,7 @@ def SGD(x_train, y_train, learning_rate = 0.001, iters = 1000):
             loss = y_train[random_index] - f
 
             dw = -x_train[random_index, :].reshape(1, -1).T.dot(loss)
-            w += - learning_rate * dw
+            w += - learning_rate * dw * (1 / x_train.shape[0])
             weights.append(w.ravel().T)
     weights = np.array(weights).reshape(-1,x_train.shape[1])
 
@@ -33,7 +33,7 @@ def BGD(x_train, y_train, learning_rate = 0.01, iters = 100000):
         f = sigmoid(np.dot(x_train, w))
         loss = y_train - f
         dw = -x_train.T.dot(loss)
-        w += -learning_rate * dw
+        w += -learning_rate * dw * (1 / x_train.shape[0])
         weights[i,:] = w.ravel().T
         
     return w, weights
