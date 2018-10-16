@@ -1,3 +1,7 @@
+#1、特征具有相近的尺度，这将帮助梯度下降算法更快地收敛。尽量缩放到[-1,1]，因为x0=1
+#2、学习率过小，达到收敛的迭代次数会非常高；学习率过大，每次迭代可能不会减小代价函数，
+#   可能会越过局部最小值导致无法收敛
+
 import numpy as np
 from sklearn.model_selection import train_test_split
 import pandas
