@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def sigmoid(x):
     return 1/(1 + np.exp(-x))
 
-def SGD(x_train, y_train, learning_rate = 0.001, iters = 1000):
+def SGD(x_train, y_train, iters, learning_rate):
     w = np.random.uniform(0,0.01,size=(x_train.shape[1],1))
     weights = []
     
@@ -25,7 +25,7 @@ def SGD(x_train, y_train, learning_rate = 0.001, iters = 1000):
 
     return w, weights
 
-def BGD(x_train, y_train, learning_rate = 0.01, iters = 100000):
+def BGD(x_train, y_train, iters, learning_rate):
     w = np.random.uniform(0,0.01,size=(x_train.shape[1],1))
     weights = np.zeros((iters, x_train.shape[1]))
     
@@ -39,7 +39,7 @@ def BGD(x_train, y_train, learning_rate = 0.01, iters = 100000):
     return w, weights
 
 class LogisticRegression():
-    def __init__(self, learning_rate = 0.01, iters = 1000):
+    def __init__(self, iters = 1000, learning_rate = 0.01):
         self.learning_rate = learning_rate
         self.iters = iters
 
@@ -47,10 +47,10 @@ class LogisticRegression():
         x_train = np.insert(x_train, 0, 1, axis=1)
         
         if gradient_function == 'BGD':
-            self.w, self.weights = BGD(x_train, y_train, self.learning_rate)
+            self.w, self.weights = BGD(x_train, y_train, self.iters, self.learning_rate)
             
         elif gradient_function == 'SGD':
-            self.w, self.weights = SGD(x_train, y_train, self.learning_rate)
+            self.w, self.weights = SGD(x_train, y_train, self.iters, self.learning_rate)
         
     def predict(self, x_test):
         x_test = np.insert(x_test, 0, 1, axis=1)
