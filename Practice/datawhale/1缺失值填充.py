@@ -14,6 +14,15 @@ df.isnull().sum().sort_values(ascending=False)
 df_mean = df.fillna(df.mean())
 df_median = df.fillna(df.median())
 df.dropna(inplace=True)
+'''
+或者使用impute
+from sklearn.preprocessing import Imputer
+
+imputer = Imputer(strategy="most_frequent")
+imputer.fit(fi_copy_num)
+fi_num = imputer.transform(fi_copy_num)
+fi_num = pd.DataFrame(fi_num,columns=fi_copy_num.columns)
+'''
 
 label = df['status']
 df.drop(columns=['status'], inplace=True)
